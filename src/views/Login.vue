@@ -3,9 +3,14 @@
 </template>
 
 <script>
-    export default {
-        name: "Login"
-    }
+export default {
+  name: 'Login',
+  methods: {
+    asdf() {
+      return 'asdf';
+    },
+  },
+};
 </script>
 
 <style scoped>
