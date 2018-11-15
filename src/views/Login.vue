@@ -1,5 +1,8 @@
 <template lang="pug">
-    .asdf asdf
+  .login-root
+    .introduction 안녕하세요
+    form
+      input(type="text" placeholder="id")
 </template>
 
 <script>
