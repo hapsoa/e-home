@@ -39,6 +39,35 @@ class CloudFirestore {
 const database = new CloudFirestore();
 
 class Authentication {
+  constructor() {
+    this.userOnlineListener = null;
+    this.userOfflineListener = null;
+
+    firebase.auth().onAuthStateChanged((user) => {
+      console.log(user);
+      if (user) {
+        // User is signed in.
+        // router에 접근할 수 있을까? 접근하려면 해당 Vue 객체를 알고 있어야 한다.
+        // 아니면 리스너를 달아준다.
+        // this.router.push('/');
+        if (!_.isNil(this.userOnlineListener)) this.userOnlineListener();
+      } else {
+        // No user is signed in.
+        // this.router.push('/login');
+        // eslint-disable-next-line no-lonely-if
+        if (!_.isNil(this.userOfflineListener)) this.userOfflineListener();
+      }
+    });
+  }
+
+  setUserOnlineListener(listener) {
+    this.userOnlineListener = listener;
+  }
+
+  setUserOfflineListener(listener) {
+    this.userOfflineListener = listener;
+  }
+
   async login() {
     try {
       const result = await firebase.auth().signInWithPopup(provider);
