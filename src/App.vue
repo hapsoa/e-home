@@ -10,9 +10,13 @@
 
 <script>
 import Vue from 'vue';
+import _ from 'lodash';
+
 import firebase from './firebase';
 
 Vue.prototype.$firebase = firebase;
+// eslint-disable-next-line no-underscore-dangle
+Vue.prototype.$_ = _;
 
 export default {
   name: 'App',

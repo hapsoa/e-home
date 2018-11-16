@@ -1,36 +1,54 @@
 /* eslint-disable class-methods-use-this */
+import _ from 'lodash';
 import firebase from './initializingFirebase';
 
 const provider = new firebase.auth.GoogleAuthProvider();
 const db = firebase.firestore();
+const settings = {/* your settings... */ timestampsInSnapshots: true };
+db.settings(settings);
 
 class CloudFirestore {
-  loginUser() {
-    db.collection('users').add({
-      first: 'Ada',
-      last: 'Lovelace',
-      born: 1815,
+  loginUser(user) {
+    db.collection('users').doc(user.uid).set({
+      uid: user.uid,
     })
-      .then((docRef) => {
-        console.log('Document written with ID: ', docRef.id);
+      .then(() => {
+        console.log('Document successfully written!');
       })
       .catch((error) => {
-        console.error('Error adding document: ', error);
+        console.error('Error writing document: ', error);
       });
+  }
+
+  getUser(uid) {
+    const docRef = db.collection('users').doc(uid);
+
+    docRef.get().then((doc) => {
+      if (doc.exists) {
+        console.log('Document data:', doc.data());
+        return doc.data();
+      }
+      // doc.data() will be undefined in this case
+      console.log('No such document!');
+      return null;
+    }).catch((error) => {
+      console.log('Error getting document:', error);
+    });
   }
 }
 const database = new CloudFirestore();
 
 class Authentication {
-  login() {
-    firebase.auth().signInWithPopup(provider).then((result) => {
+  async login() {
+    try {
+      const result = await firebase.auth().signInWithPopup(provider);
       // This gives you a Google Access Token. You can use it to access the Google API.
       const token = result.credential.accessToken;
       // The signed-in user info.
       const user = result.user;
-      // ...
-      database.loginUser();
-    }).catch((error) => {
+
+      database.loginUser(user);
+    } catch (error) {
       // Handle Errors here.
       const errorCode = error.code;
       const errorMessage = error.message;
@@ -40,7 +58,7 @@ class Authentication {
       const credential = error.credential;
       // ...
       console.log(errorMessage);
-    });
+    }
   }
 }
 

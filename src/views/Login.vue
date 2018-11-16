@@ -3,10 +3,10 @@
     .introduction 안녕하세요 나만의 공간
       br
       | e-home 입니다
-    form
-      input(type="text" placeholder="id")
-      input(type="password" placeholder="password")
-      input(type="submit" value="로그인")
+    <!--form-->
+      <!--input(type="text" placeholder="id")-->
+      <!--input(type="password" placeholder="password")-->
+      <!--input(type="submit" value="로그인")-->
     button(type="button" @click="login") 구글로 로그인
 </template>
 
