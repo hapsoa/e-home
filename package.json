@@ -5,9 +5,11 @@
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
-    "lint": "vue-cli-service lint"
+    "lint": "vue-cli-service lint",
+    "build-run": "serve -s dist"
   },
   "dependencies": {
+    "firebase": "^5.5.8",
     "node-sass": "^4.10.0",
     "pug": "^2.0.3",
     "pug-loader": "^2.4.0",

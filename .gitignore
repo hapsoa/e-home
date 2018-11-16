@@ -153,3 +153,6 @@ typings/
 
 .idea/
 .idea
+
+# firebase
+src/firebase/initializingFirebase.js
