@@ -6,7 +6,8 @@
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
     "lint": "vue-cli-service lint",
-    "build-run": "serve -s dist"
+    "build-local-run": "serve -s dist",
+    "firebase-deploy": "firebase deploy --only hosting"
   },
   "dependencies": {
     "firebase": "^5.5.8",

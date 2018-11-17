@@ -9,6 +9,7 @@
         router-link(to="/cloud-drive") 클라우드 저장소
         .category 포트폴리오
         .category 달력
+        .category 공부 노트
       .router-view
         router-view
     //loading-spinner
@@ -90,4 +91,5 @@ body
     display: none
   .router-view
     width: 100%
+
 </style>
