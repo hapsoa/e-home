@@ -14,6 +14,16 @@ export default new Router({
       component: Home,
     },
     {
+      path: '/memo',
+      name: 'memo',
+      component: () => import('./views/memo/MemoHome.vue'),
+    },
+    {
+      path: '/memo/making',
+      name: 'making-memo',
+      component: () => import('./views/memo/MakingMemo.vue'),
+    },
+    {
       path: '/about',
       name: 'about',
       // route level code-splitting

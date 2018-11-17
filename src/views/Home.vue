@@ -1,6 +1,6 @@
 <template lang="pug">
   .home
-    .message hi
+    .message welcome
     <!--<img alt="Vue logo" src="../assets/logo.png">-->
     <!--<HelloWorld msg="Welcome to Your Vue.js App"/>-->
 
@@ -19,6 +19,10 @@ export default {
 </script>
 
 <style scoped lang="sass">
-
+  .home
+    width: 100%
+    height: 100%
+    text-align: center
+    padding-top: 250px
 
 </style>

@@ -35,6 +35,10 @@ class CloudFirestore {
       console.log('Error getting document:', error);
     });
   }
+
+  setMemo() {
+
+  }
 }
 const database = new CloudFirestore();
 
