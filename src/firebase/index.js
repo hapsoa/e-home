@@ -36,8 +36,34 @@ class CloudFirestore {
     });
   }
 
-  setMemo() {
+  setMemo(memoContentsString) {
+    const user = firebase.auth().currentUser;
 
+    db.collection('users').doc(user.uid).collection('memo').add({
+      memo: memoContentsString,
+    })
+      .then((docRef) => {
+        console.log('Document written with ID: ', docRef.id);
+      })
+      .catch((error) => {
+        console.error('Error adding document: ', error);
+      });
+  }
+
+  getMemo() {
+    const user = firebase.auth().currentUser;
+
+    if (!_.isNil(user)) {
+      db.collection('users').doc(user.uid).collection('memo').get()
+        .then((querySnapshot) => {
+          querySnapshot.forEach((doc) => {
+          // doc.data() is never undefined for query doc snapshots
+             console.log(doc.id, ' => ', doc.data());
+          });
+        });
+    } else {
+      console.log('no logined user');
+    }
   }
 }
 const database = new CloudFirestore();
@@ -46,6 +72,7 @@ class Authentication {
   constructor() {
     this.userOnlineListener = null;
     this.userOfflineListener = null;
+    this.logoutListener = null;
 
     firebase.auth().onAuthStateChanged((user) => {
       console.log(user);
@@ -92,6 +119,17 @@ class Authentication {
       // ...
       console.log(errorMessage);
     }
+  }
+
+  logout() {
+    firebase.auth().signOut().then(() => {
+      // Sign-out successful.
+      console.log('logout complete');
+      if (!_.isNil(this.logoutListener)) this.logoutListener();
+    }).catch((error) => {
+      // An error happened.
+      console.log(error);
+    });
   }
 }
 

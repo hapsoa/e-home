@@ -3,12 +3,22 @@
   nav
     input(type="text" placeholder="search")
     button(type="button" @click="$router.push('/memo/making')") 메모 만들기
+  .memos
 
 </template>
 
 <script>
 export default {
   name: 'Memo',
+  data() {
+    return {
+    };
+  },
+  created() {
+    console.log('yap');
+    const temp = this.$firebase.database.getMemo();
+    console.log(temp);
+  },
 };
 </script>
 

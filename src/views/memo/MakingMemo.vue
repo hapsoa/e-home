@@ -1,15 +1,26 @@
 <template lang="pug">
 .making-memo-root
-  textarea
+  textarea(v-model="memoContents")
   .controller
     button(type="button" @click="$router.go(-1)") 취소
     // 데이터베이스에 메모 내용을 저장시키고, 해당 내용을 보여 준다.
-    button(type="button" @click="") 저장
+    button(type="button" @click="sendMemo()") 저장
 </template>
 
 <script>
 export default {
   name: 'MakingMemo',
+  data() {
+    return {
+      memoContents: '',
+    };
+  },
+  methods: {
+    sendMemo() {
+      console.log('textArea : ', this.memoContents);
+      this.$firebase.database.setMemo(this.memoContents);
+    },
+  },
 };
 </script>
 

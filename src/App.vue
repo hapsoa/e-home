@@ -1,6 +1,8 @@
 <template lang="pug">
   #app
     header
+      .empty
+      button(type="button" @click="logout()") Logout
     main
       aside(v-if="isLoggedIn")
         router-link(to="/memo") 메모
@@ -33,6 +35,12 @@ export default {
     return {
       isLoggedIn: false,
     };
+  },
+  methods: {
+    logout() {
+      this.$firebase.auth.logout();
+      this.$router.push('/login');
+    },
   },
   watch: {
     // isLoggedIn(from, to) {
@@ -69,9 +77,12 @@ body
 #app
   width: 100%
   header
+    display: flex
     width: 100%
     height: $header-height
     border-bottom: 1px solid #aaa
+    .empty
+      flex: 1
   main
     display: flex
     width: 100%
