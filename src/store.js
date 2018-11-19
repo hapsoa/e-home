@@ -21,9 +21,8 @@ export default new Vuex.Store({
       state.savedMethods.push(method);
     },
     shotMethods(state) {
-      console.log('saved methods are shot');
-      console.log('savedMethods : ', state.savedMethods);
       if (!_.isEmpty(state.savedMethods)) _.forEach(state.savedMethods, method => method());
+      console.log('saved methods are shot');
       state.savedMethods = [];
     },
   },

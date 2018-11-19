@@ -78,7 +78,7 @@ class CloudFirestore {
         // 클릭시 해당 내용만 있는 페이지로 넘어간다
         memos.push(doc.data());
       });
-      console.log(memos);
+      console.log('memos in database : ', memos);
     } else console.log('no logined user');
     return memos;
   }
@@ -94,7 +94,7 @@ class Authentication {
 
     firebase.auth()
       .onAuthStateChanged((user) => {
-        console.log(user);
+        console.log('current user : ', user);
         if (user) {
           // User is signed in.
           // router에 접근할 수 있을까? 접근하려면 해당 Vue 객체를 알고 있어야 한다.
@@ -153,6 +153,10 @@ class Authentication {
         // An error happened.
         console.log(error);
       });
+  }
+
+  getCurrentUser() {
+    return firebase.auth().currentUser;
   }
 }
 

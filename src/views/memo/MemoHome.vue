@@ -4,28 +4,37 @@
     input(type="text" placeholder="search")
     button(type="button" @click="$router.push('/memo/making')") 메모 만들기
   .memos
+    memo(v-for="memo in memos" :contents="memo")
 
 </template>
 
 <script>
+/* eslint-disable no-underscore-dangle */
+import memo from '@/components/memo/Memo.vue';
+
 export default {
   name: 'Memo',
+  components: { memo },
   data() {
     return {
+      memos: [],
     };
   },
   methods: {
   },
-  beforeCreate() {
+  async created() {
     const getMemos = async () => {
-      const temp = await this.$firebase.database.getMemo();
-      console.log('getMemo: ', temp);
+      const tempMemos = await this.$firebase.database.getMemo();
+      this.memos = this.$_.map(tempMemos, document => document.memo);
     };
 
-    this.$store.commit('saveMethod', getMemos);
+    if (this.$_.isNil(this.$firebase.auth.getCurrentUser())) {
+      this.$store.commit('saveMethod', getMemos);
+    } else {
+      await getMemos();
+    }
   },
-  created() {
-  },
+
 };
 </script>
 
@@ -39,4 +48,8 @@ export default {
     padding: 10px 0
     > button
       margin-left: 20px
+  .memos
+    display: flex
+    width: 100%
+    height: 100%
 </style>

@@ -6,3 +6,5 @@ trim_trailing_whitespace = true
 insert_final_newline = true
 max_line_length = 100
 linebreak-style = 0
+no-underscore-dangle = ["error", { "allow": ["$_", "_bar"] }]
+

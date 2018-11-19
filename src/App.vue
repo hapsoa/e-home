@@ -102,6 +102,7 @@ body
       flex-direction: column
       width: $aside-width
       border-right: 1px solid #aaa
+      text-align: center
     .router-view
       width: calc(100% - #{$aside-width})
 
