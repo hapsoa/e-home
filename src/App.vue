@@ -1,17 +1,20 @@
 <template lang="pug">
   #app
-    header
+    header(v-if="$store.state.isLogin")
       .empty
       button(type="button" @click="logout()") Logout
     main
-      aside(v-if="isLoggedIn")
+      aside(v-if="$store.state.isLogin")
         router-link(to="/memo") 메모
         router-link(to="/diary") 일기
         router-link(to="/gallery") 사진첩
         router-link(to="/cloud-drive") 클라우드 저장소
-        .category 포트폴리오
-        .category 달력
+        .category 캘린더
         .category 공부 노트
+        .category To-Do
+        .category 메일
+        .category 포트폴리오
+        .category people
       .router-view
         router-view
     //loading-spinner
@@ -33,12 +36,12 @@ export default {
   name: 'App',
   data() {
     return {
-      isLoggedIn: false,
     };
   },
   methods: {
     logout() {
       this.$firebase.auth.logout();
+      this.$store.commit('logout');
       this.$router.push('/login');
     },
   },
@@ -49,12 +52,17 @@ export default {
     //   }
     // },
   },
-  created() {
+  beforeCreate() {
     this.$firebase.auth.setUserOnlineListener(() => {
-      this.isLoggedIn = true;
-      this.$router.push('/');
+      this.$store.commit('login');
+      this.$store.commit('shotMethods');
+      // login page일 때
+      if (this.$route.name === 'login') {
+        this.$router.push('/');
+      }
     });
     this.$firebase.auth.setUserOfflineListener(() => {
+      this.$store.commit('logout');
       this.$router.push('/login');
     });
   },

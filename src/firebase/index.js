@@ -79,8 +79,7 @@ class CloudFirestore {
         memos.push(doc.data());
       });
       console.log(memos);
-    }
-    console.log('no logined user');
+    } else console.log('no logined user');
     return memos;
   }
 }

@@ -14,8 +14,9 @@
 export default {
   name: 'Login',
   methods: {
-    login() {
-      this.$firebase.auth.login();
+    async login() {
+      await this.$firebase.auth.login();
+      this.$store.commit('login');
     },
   },
 };

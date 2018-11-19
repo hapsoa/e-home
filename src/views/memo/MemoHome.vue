@@ -14,10 +14,17 @@ export default {
     return {
     };
   },
+  methods: {
+  },
+  beforeCreate() {
+    const getMemos = async () => {
+      const temp = await this.$firebase.database.getMemo();
+      console.log('getMemo: ', temp);
+    };
+
+    this.$store.commit('saveMethod', getMemos);
+  },
   created() {
-    console.log('yap');
-    const temp = this.$firebase.database.getMemo();
-    console.log(temp);
   },
 };
 </script>
