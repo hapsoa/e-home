@@ -9,6 +9,7 @@ export default new Vuex.Store({
   state: {
     isLogin: false,
     savedMethods: [],
+    isLoading: false,
   },
   mutations: {
     login(state) {
@@ -24,6 +25,12 @@ export default new Vuex.Store({
       if (!_.isEmpty(state.savedMethods)) _.forEach(state.savedMethods, method => method());
       console.log('saved methods are shot');
       state.savedMethods = [];
+    },
+    startLoading(state) {
+      state.isLoading = true;
+    },
+    endLoading(state) {
+      state.isLoading = false;
     },
   },
   actions: {

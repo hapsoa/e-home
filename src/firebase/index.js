@@ -44,21 +44,17 @@ class CloudFirestore {
       });
   }
 
-  setMemo(memoContentsString) {
+  async setMemo(memoContentsString) {
     const user = firebase.auth().currentUser;
 
-    db.collection('users')
-      .doc(user.uid)
-      .collection('memo')
-      .add({
-        memo: memoContentsString,
-      })
-      .then((docRef) => {
-        console.log('Document written with ID: ', docRef.id);
-      })
-      .catch((error) => {
-        console.error('Error adding document: ', error);
-      });
+    const ref = db.collection('users').doc(user.uid).collection('memo');
+
+    try {
+      const docRef = await ref.add({ memo: memoContentsString });
+      console.log('Document written with ID: ', docRef.id);
+    } catch (error) {
+      console.error('Error adding document: ', error);
+    }
   }
 
   async getMemo() {
@@ -109,8 +105,6 @@ class Authentication {
         console.log('current user : ', user);
         if (user) {
           // User is signed in.
-          // router에 접근할 수 있을까? 접근하려면 해당 Vue 객체를 알고 있어야 한다.
-          // 아니면 리스너를 달아준다.
           // this.router.push('/');
           if (!_.isNil(this.userOnlineListener)) this.userOnlineListener();
         } else {

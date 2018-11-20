@@ -16,8 +16,9 @@ export default {
     };
   },
   methods: {
-    sendMemo() {
+    async sendMemo() {
       console.log('textArea : ', this.memoContents);
+      this.$router.push({ name: 'memo' });
       this.$firebase.database.setMemo(this.memoContents);
     },
   },

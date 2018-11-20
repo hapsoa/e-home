@@ -1,25 +1,27 @@
 <template lang="pug">
   #app
-    header(v-if="$store.state.isLogin")
-      router-link(to="/") e-home
-      .empty
-      button(type="button" @click="logout()") Logout
-    main
-      aside(v-if="$store.state.isLogin")
-        router-link(to="/memo") 메모
-        router-link(to="/diary") 일기
-        .category To-Do
-        router-link(to="/gallery") 사진첩
-        router-link(to="/cloud-drive") 클라우드 저장소
-        .category 캘린더
-        .category 메일
-        .category 포트폴리오
-        .category 공부 노트
-        .category people
-      .router-view
-        router-view
+    .app-root(v-if="!$store.state.isLoading")
+      header(v-if="$store.state.isLogin")
+        router-link(to="/") e-home
+        .empty
+        button(type="button" @click="logout()") Logout
+      main
+        aside(v-if="$store.state.isLogin")
+          router-link(to="/memo") 메모
+          router-link(to="/diary") 일기
+          .category To-Do
+          router-link(to="/gallery") 사진첩
+          router-link(to="/cloud-drive") 클라우드 저장소
+          .category 캘린더
+          .category 메일
+          .category 포트폴리오
+          .category 공부 노트
+          .category people
+          .category 마음
+        .router-view
+          router-view
     //loading-spinner
-    loading-cat
+    loading-cat(v-else)
 
 </template>
 
