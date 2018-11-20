@@ -24,6 +24,7 @@ export default {
 
 <style scoped lang="sass">
 .login-root
+  width: 100vw
   display: flex
   flex-direction: column
   align-items: center

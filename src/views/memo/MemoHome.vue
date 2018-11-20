@@ -4,7 +4,9 @@
     input(type="text" placeholder="search")
     button(type="button" @click="$router.push('/memo/making')") 메모 만들기
   .memos
-    memo(v-for="memo in memos" :contents="memo")
+    memo(v-for="(contents, id) in memos"
+      :id="id" :contents="contents"
+      @deleteMemo="deleteMemo")
 
 </template>
 
@@ -17,15 +19,17 @@ export default {
   components: { memo },
   data() {
     return {
-      memos: [],
+      memos: {},
     };
   },
   methods: {
+    deleteMemo(memoId) {
+      this.$delete(this.memos, memoId);
+    },
   },
   async created() {
     const getMemos = async () => {
-      const tempMemos = await this.$firebase.database.getMemo();
-      this.memos = this.$_.map(tempMemos, document => document.memo);
+      this.memos = await this.$firebase.database.getMemo();
     };
 
     if (this.$_.isNil(this.$firebase.auth.getCurrentUser())) {

@@ -63,7 +63,7 @@ class CloudFirestore {
 
   async getMemo() {
     const user = firebase.auth().currentUser;
-    const memos = [];
+    const memos = {};
 
     if (!_.isNil(user)) {
       const querySnapshot = await db.collection('users')
@@ -76,11 +76,23 @@ class CloudFirestore {
         //   console.log(doc.id, ' => ', doc.data());
         // array 로 만든 다음에, 해당 array 대로, 사각형에 맞춰 그린다.
         // 클릭시 해당 내용만 있는 페이지로 넘어간다
-        memos.push(doc.data());
+        memos[doc.id] = doc.data().memo;
       });
       console.log('memos in database : ', memos);
     } else console.log('no logined user');
     return memos;
+  }
+
+  async deleteMemo(memoId) {
+    const user = firebase.auth().currentUser;
+
+    const memoRef = db.collection('users').doc(user.uid).collection('memo').doc(memoId);
+    try {
+      await memoRef.delete();
+      console.log('Document successfully deleted!');
+    } catch (error) {
+      console.error('Error removing document: ', error);
+    }
   }
 }
 

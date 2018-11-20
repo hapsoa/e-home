@@ -19,6 +19,7 @@
       .router-view
         router-view
     //loading-spinner
+    loading-cat
 
 </template>
 
@@ -28,6 +29,7 @@ import _ from 'lodash';
 
 import firebase from './firebase';
 import loadingSpinner from './components/LoadingSpinner.vue';
+import loadingCat from './components/LoadingCat.vue';
 
 Vue.prototype.$firebase = firebase;
 // eslint-disable-next-line no-underscore-dangle
@@ -35,6 +37,9 @@ Vue.prototype.$_ = _;
 
 export default {
   name: 'App',
+  components: {
+    loadingSpinner, loadingCat,
+  },
   data() {
     return {
     };
@@ -66,9 +71,6 @@ export default {
       this.$store.commit('logout');
       this.$router.push('/login');
     });
-  },
-  components: {
-    loadingSpinner,
   },
 };
 </script>

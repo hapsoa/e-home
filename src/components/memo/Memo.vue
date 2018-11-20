@@ -9,14 +9,19 @@
 export default {
   name: 'Memo',
   props: {
+    id: {
+      type: String,
+      default: '',
+    },
     contents: {
       type: String,
       default: '',
     },
   },
   methods: {
-    deleteMemo() {
-      // this.$firebase.database.deleteMemo();
+    async deleteMemo() {
+      await this.$firebase.database.deleteMemo(this.id);
+      this.$emit('deleteMemo', this.id);
     },
   },
 };
