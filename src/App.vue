@@ -29,12 +29,14 @@
 import Vue from 'vue';
 import _ from 'lodash';
 
-import BootstrapVue from 'bootstrap-vue';
+// import BootstrapVue from 'bootstrap-vue';
+// import 'bootstrap/dist/css/bootstrap.css';
+// import 'bootstrap-vue/dist/bootstrap-vue.css';
 import firebase from './firebase';
 import loadingSpinner from './components/LoadingSpinner.vue';
 import loadingCat from './components/LoadingCat.vue';
 
-Vue.use(BootstrapVue);
+// Vue.use(BootstrapVue);
 Vue.prototype.$firebase = firebase;
 // eslint-disable-next-line no-underscore-dangle
 Vue.prototype.$_ = _;
@@ -111,7 +113,6 @@ body
       flex-direction: column
       width: $aside-width
       border-right: 1px solid #aaa
-      text-align: center
     .router-view
       width: calc(100% - #{$aside-width})
 
