@@ -12,6 +12,15 @@
 
 export default {
   name: 'home',
+  beforeCreate() {
+    // this.$store.commit('startLoading');
+  },
+  mounted() {
+    setTimeout(() => {
+      console.log(this.$store.state.isLoading);
+    }, 3000);
+    console.log('2 mounted?');
+  },
   // components: {
   //   HelloWorld,
   // },

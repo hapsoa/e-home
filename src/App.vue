@@ -29,10 +29,12 @@
 import Vue from 'vue';
 import _ from 'lodash';
 
+import BootstrapVue from 'bootstrap-vue';
 import firebase from './firebase';
 import loadingSpinner from './components/LoadingSpinner.vue';
 import loadingCat from './components/LoadingCat.vue';
 
+Vue.use(BootstrapVue);
 Vue.prototype.$firebase = firebase;
 // eslint-disable-next-line no-underscore-dangle
 Vue.prototype.$_ = _;
@@ -60,10 +62,11 @@ export default {
     //   }
     // },
   },
-  beforeCreate() {
+  created() {
     this.$firebase.auth.setUserOnlineListener(() => {
       this.$store.commit('login');
       this.$store.commit('shotMethods');
+      this.$store.commit('endLoading');
       // login page일 때
       if (this.$route.name === 'login') {
         this.$router.push('/');

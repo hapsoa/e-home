@@ -9,7 +9,7 @@ export default new Vuex.Store({
   state: {
     isLogin: false,
     savedMethods: [],
-    isLoading: false,
+    isLoading: true,
   },
   mutations: {
     login(state) {
@@ -22,8 +22,11 @@ export default new Vuex.Store({
       state.savedMethods.push(method);
     },
     shotMethods(state) {
-      if (!_.isEmpty(state.savedMethods)) _.forEach(state.savedMethods, method => method());
-      console.log('saved methods are shot');
+      if (!_.isEmpty(state.savedMethods)) {
+        _.forEach(state.savedMethods, method => method());
+        console.log('saved methods are shot');
+      }
+
       state.savedMethods = [];
     },
     startLoading(state) {
@@ -31,6 +34,7 @@ export default new Vuex.Store({
     },
     endLoading(state) {
       state.isLoading = false;
+      console.log('loading end');
     },
   },
   actions: {
