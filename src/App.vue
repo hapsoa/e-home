@@ -38,7 +38,6 @@ import loadingCat from './components/LoadingCat.vue';
 
 // Vue.use(BootstrapVue);
 Vue.prototype.$firebase = firebase;
-// eslint-disable-next-line no-underscore-dangle
 Vue.prototype.$_ = _;
 
 export default {
@@ -76,6 +75,7 @@ export default {
     });
     this.$firebase.auth.setUserOfflineListener(() => {
       this.$store.commit('logout');
+      this.$store.commit('endLoading');
       this.$router.push('/login');
     });
   },
