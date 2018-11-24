@@ -2,12 +2,17 @@
   .memo
     .memo-header
       font-awesome-icon(icon="times" @click="deleteMemo()").icon
-    .memo-contents {{contents}}
+    .memo-contents(v-html="lineSpaceChangedContents")
 </template>
 
 <script>
 export default {
   name: 'Memo',
+  data() {
+    return {
+      lineSpaceChangedContents: '',
+    };
+  },
   props: {
     id: {
       type: String,
@@ -23,6 +28,10 @@ export default {
       await this.$firebase.database.deleteMemo(this.id);
       this.$emit('deleteMemo', this.id);
     },
+  },
+  created() {
+    // this.lineSpaceChangedContents = this.contents;
+    this.lineSpaceChangedContents = this.contents.split(/\n|\r|↵/).join('<br>');
   },
 };
 </script>
