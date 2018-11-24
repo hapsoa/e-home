@@ -43,6 +43,7 @@ export default {
     margin: 5px
     background-color: antiquewhite
     border: 1px solid #aaa
+    overflow: hidden
     > .memo-header
       display: flex
       justify-content: flex-end
@@ -53,4 +54,7 @@ export default {
       > .icon
         margin-right: 5px
         cursor: pointer
+    > .memo-contents
+      width: 100%
+
 </style>

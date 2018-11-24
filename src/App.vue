@@ -2,6 +2,7 @@
   #app
     .app-root(v-if="!$store.state.isLoading")
       header(v-if="$store.state.isLogin")
+        img(src='./assets/e-home-logo.png' width="30")
         router-link(to="/") e-home
         .empty
         button(type="button" @click="logout()") Logout

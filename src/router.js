@@ -36,5 +36,15 @@ export default new Router({
       name: 'login',
       component: () => import('./views/Login.vue'),
     },
+    {
+      path: '/diary',
+      name: 'diary',
+      component: () => import('./views/diary/DiaryHome.vue'),
+    },
+    {
+      path: '/diary/writing',
+      name: 'writing-diary',
+      component: () => import('./views/diary/WritingDiary.vue'),
+    },
   ],
 });
