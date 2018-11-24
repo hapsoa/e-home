@@ -46,5 +46,10 @@ export default new Router({
       name: 'writing-diary',
       component: () => import('./views/diary/WritingDiary.vue'),
     },
+    {
+      path: '/diary/detail',
+      name: 'diary-detail',
+      component: () => import('./views/diary/DiaryDetail.vue'),
+    },
   ],
 });

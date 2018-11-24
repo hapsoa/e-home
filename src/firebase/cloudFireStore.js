@@ -9,7 +9,7 @@ const settings = {
 db.settings(settings);
 
 class CloudFirestore {
-  loginUser(user) {
+  static loginUser(user) {
     db.collection('users')
       .doc(user.uid)
       .set({
@@ -23,7 +23,7 @@ class CloudFirestore {
       });
   }
 
-  getUser(uid) {
+  static getUser(uid) {
     const docRef = db.collection('users')
       .doc(uid);
 
@@ -42,7 +42,7 @@ class CloudFirestore {
       });
   }
 
-  async setMemo(memoContentsString) {
+  static async setMemo(memoContentsString) {
     const user = firebase.auth().currentUser;
 
     const ref = db.collection('users').doc(user.uid).collection('memo');
@@ -55,7 +55,7 @@ class CloudFirestore {
     }
   }
 
-  async getMemo() {
+  static async getMemo() {
     const user = firebase.auth().currentUser;
     const memos = {};
 
@@ -77,7 +77,7 @@ class CloudFirestore {
     return memos;
   }
 
-  async deleteMemo(memoId) {
+  static async deleteMemo(memoId) {
     const user = firebase.auth().currentUser;
 
     const memoRef = db.collection('users').doc(user.uid).collection('memo').doc(memoId);
@@ -89,20 +89,58 @@ class CloudFirestore {
     }
   }
 
-  async setDiary(diaryContents) {
+  static async setDiary(diaryData) {
     const user = firebase.auth().currentUser;
 
     const ref = db.collection('users').doc(user.uid).collection('diary');
 
     try {
-      const docRef = await ref.add({ memo: diaryContents });
+      const docRef = await ref.add({
+        title: diaryData.title,
+        contents: diaryData.contents,
+      });
       console.log('Document written with ID: ', docRef.id);
     } catch (error) {
       console.error('Error adding document: ', error);
     }
   }
+
+  static async getDiary(diaryId) {
+    const user = firebase.auth().currentUser;
+    let diaries = {};
+
+    if (!_.isNil(user)) {
+      if (!_.isNil(diaryId)) {
+        const docRef = db.collection('users').doc(user.uid)
+          .collection('diary').doc(diaryId);
+        try {
+          const doc = await docRef.get();
+          if (doc.exists) {
+            console.log('Document data:', doc.data());
+            diaries = doc.data();
+          } else {
+            // doc.data() will be undefined in this case
+            console.log('No such document!');
+          }
+        } catch (error) {
+          console.log('Error getting document:', error);
+        }
+      } else {
+        const querySnapshot = await db.collection('users')
+          .doc(user.uid)
+          .collection('diary')
+          .get();
+
+        querySnapshot.forEach((doc) => {
+          diaries[doc.id] = doc.data();
+        });
+        console.log('diaries in database : ', diaries);
+      }
+    } else console.log('no logined user');
+    return diaries;
+  }
 }
 
-const database = new CloudFirestore();
+// const database = new CloudFirestore();
 
-export default database;
+export default CloudFirestore;
