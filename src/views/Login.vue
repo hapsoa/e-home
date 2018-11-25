@@ -7,7 +7,7 @@
       <!--input(type="text" placeholder="id")-->
       <!--input(type="password" placeholder="password")-->
       <!--input(type="submit" value="로그인")-->
-    button(type="button" @click="login") 구글로 로그인
+    b-button(variant="primary" @click="login") 구글로 로그인
 </template>
 
 <script>
