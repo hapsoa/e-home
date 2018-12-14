@@ -98,6 +98,7 @@ class CloudFirestore {
       const docRef = await ref.add({
         title: diaryData.title,
         contents: diaryData.contents,
+        date: new Date().getTime(),
       });
       console.log('Document written with ID: ', docRef.id);
     } catch (error) {

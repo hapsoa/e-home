@@ -4,7 +4,7 @@
       input(type="text" placeholder="search")
       button(type="button" @click="$router.push({name: 'writing-diary'})") 일기 쓰기
     .diaries
-      .diary(v-for="(data, id) in diaries" @click="lookDiary(id)") {{data.title}}
+      .diary(v-for="(diary, index) in diaries" :key="diary.id" @click="lookDiary(diary.id)") {{diary.title}}
 </template>
 
 <script>
@@ -22,6 +22,15 @@ export default {
   },
   async created() {
     this.diaries = await this.$firebase.database.getDiary();
+    
+    const temp = [];
+    
+    this.$_.forEach(this.diaries, (value, key) => {
+      value.id = key;
+      temp.push(value);
+    })
+    
+    this.diaries = this.$_.orderBy(temp, ['date'], ['desc']);
   },
 };
 </script>
